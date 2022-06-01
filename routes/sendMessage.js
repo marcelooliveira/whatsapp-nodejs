@@ -3,7 +3,6 @@ var router = express.Router();
 var axios = require('axios');
 require('dotenv').config()
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
   var data = JSON.stringify({
     "messaging_product": "whatsapp",
