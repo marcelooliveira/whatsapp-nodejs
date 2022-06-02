@@ -64,7 +64,10 @@ router.post('/', function(req, res, next) {
     console.log("Connected!");
     const sql = `INSERT INTO logs (log) VALUES ('${req.body}');`
     con.query(sql, function (err, result) {
-      if (err) throw err;
+      if (err) {
+        console.log("err: " + err);
+        throw err;
+      }
       console.log("Result: " + result);
     });    
   });
