@@ -52,17 +52,17 @@ router.post('/', function(req, res, next) {
     })
   })
 
-  console.log('41');
+  console.log('55');
 
   console.log('req.isXHubValid()', req.isXHubValid());
 
-  // if (!req.isXHubValid()) {
-  //   console.log('Warning - request header X-Hub-Signature not present or invalid');
-  //   res.sendStatus(401);
-  //   return;
-  // }
+  if (!req.isXHubValid()) {
+    console.log('Warning - request header X-Hub-Signature not present or invalid');
+    res.sendStatus(401);
+    return;
+  }
 
-  console.log('49');
+  console.log('65');
 
   console.log('request header X-Hub-Signature validated');
   // Process the Facebook updates here
