@@ -91,6 +91,7 @@ function saveLog(message) {
         throw err;
       }
       console.log("Result: " + JSON.stringify(result));
+      con.end();
     });
   });
 }
