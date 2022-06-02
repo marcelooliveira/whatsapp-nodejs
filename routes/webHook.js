@@ -27,6 +27,7 @@ router.post('/', function(req, res, next) {
   console.log('host:', process.env.DB_HOST);
   console.log('user:', process.env.DB_USER);
   console.log('password:', process.env.DB_PASSWORD);
+  console.log('body.entry:', req.body.entry);
 
   const body = JSON.parse(req.body)
   const entries = body.entry.map((entry)=>{
