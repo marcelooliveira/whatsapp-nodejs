@@ -30,10 +30,19 @@ router.post('/', function(req, res, next) {
   console.log('body.entry:', req.body.entry);
 
   // const body = JSON.parse(req.body)
+  // const entries = req.body.entry.map((entry)=>{
+  //   const changes = entry.changes.map((change)=>{
+  //     const messages = change.value.messages.map((message)=>{
+  //       console.log('message.text.body:', message.text.body);
+  //     })
+  //   })
+  // })
+
   const entries = req.body.entry.map((entry)=>{
     const changes = entry.changes.map((change)=>{
       const messages = change.value.messages.map((message)=>{
         console.log('message.text.body:', message.text.body);
+        saveLog(message.text.body);
       })
     })
   })
@@ -52,29 +61,34 @@ router.post('/', function(req, res, next) {
   // Process the Facebook updates here
   received_updates.unshift(req.body);
 
-  var con = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE
-  });
-  
-  con.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
-    const sql = `INSERT INTO logs (log) VALUES ('${req.body}');`
-    con.query(sql, function (err, result) {
-      if (err) {
-        console.log("err: " + err);
-        throw err;
-      }
-      console.log("Result: " + result);
-    });    
-  });
+
 
   res.sendStatus(200);
 });
 
 module.exports = router;
 
+
+function saveLog(message) {
+  var con = mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE
+  });
+
+  con.connect(function (err) {
+    if (err)
+      throw err;
+    console.log("Connected!");
+    const sql = `INSERT INTO logs (log) VALUES ('${message}');`;
+    con.query(sql, function (err, result) {
+      if (err) {
+        console.log("err: " + err);
+        throw err;
+      }
+      console.log("Result: " + result);
+    });
+  });
+}
 
