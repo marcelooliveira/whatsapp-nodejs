@@ -27,7 +27,7 @@ router.post('/', function(req, res, next) {
   console.log('host:', process.env.DB_HOST);
   console.log('user:', process.env.DB_USER);
   console.log('password:', process.env.DB_PASSWORD);
-  console.log('password:', process.env.DB_DATABASE);
+  console.log('database:', process.env.DB_DATABASE);
   console.log('body.entry:', req.body.entry);
 
   // const body = JSON.parse(req.body)
@@ -49,6 +49,8 @@ router.post('/', function(req, res, next) {
   })
 
   console.log('41');
+
+  console.log('req.isXHubValid()', req.isXHubValid());
 
   // if (!req.isXHubValid()) {
   //   console.log('Warning - request header X-Hub-Signature not present or invalid');
@@ -88,7 +90,7 @@ function saveLog(message) {
         console.log("err: " + err);
         throw err;
       }
-      console.log("Result: " + result);
+      console.log("Result: " + JSON.stringify(result));
     });
   });
 }
