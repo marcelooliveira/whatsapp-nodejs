@@ -28,6 +28,7 @@ router.post('/', function(req, res, next) {
   console.log('user:', process.env.DB_USER);
   console.log('password:', process.env.DB_PASSWORD);
   console.log('database:', process.env.DB_DATABASE);
+  console.log('body.field:', JSON.stringify(req.body.field));
   console.log('body.entry:', JSON.stringify(req.body.entry));
   saveLog('body.entry:' + JSON.stringify(req.body.entry));
 
@@ -39,6 +40,26 @@ router.post('/', function(req, res, next) {
   //     })
   //   })
   // })
+
+  // const body = req.body
+  // if (body.field !== 'messages') {
+  //   // not from the messages webhook so dont process
+  //   return res.sendStatus(400)
+  // }
+
+  // const reviews = body.value.messages.map((message) => {
+  //   const reviewInfo = {
+  //     TableName: process.env.REVIEW_TABLE,
+  //     Item: {
+  //       phonenumber: message.from,
+  //       review: message.text.body
+  //     }
+  //   }
+  //   return dynamoDb.put(reviewInfo).promise()
+  // })
+  // // return 200 code once all reviews have been written to dynamoDB
+  // return Promise.all(reviews).then((data) => res.sendStatus(200));
+
 
   let saveLogCount = 1;
 
