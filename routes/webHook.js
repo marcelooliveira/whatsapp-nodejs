@@ -24,6 +24,16 @@ router.get(['/'], function(req, res) {
 
 router.post('/', function(req, res, next) {
   console.log('Facebook request body:', req.body);
+  console.log('host:', process.env.DB_HOST);
+  console.log('user:', process.env.DB_USER);
+  console.log('password:', process.env.DB_PASSWORD);
+
+  const body = JSON.parse(req.body)
+  const entries = body.entry.map((entry)=>{
+    const changes = entry.changes.map((change)=>{
+      console.log('change:', change);
+    })
+  })
 
   if (!req.isXHubValid()) {
     console.log('Warning - request header X-Hub-Signature not present or invalid');
