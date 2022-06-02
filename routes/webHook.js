@@ -40,11 +40,11 @@ router.post('/', function(req, res, next) {
 
   console.log('41');
 
-  if (!req.isXHubValid()) {
-    console.log('Warning - request header X-Hub-Signature not present or invalid');
-    res.sendStatus(401);
-    return;
-  }
+  // if (!req.isXHubValid()) {
+  //   console.log('Warning - request header X-Hub-Signature not present or invalid');
+  //   res.sendStatus(401);
+  //   return;
+  // }
 
   console.log('49');
 
