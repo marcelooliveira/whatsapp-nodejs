@@ -39,10 +39,13 @@ router.post('/', function(req, res, next) {
   //   })
   // })
 
+  let saveLogCount = 1;
+
   const entries = req.body.entry.map((entry)=>{
     const changes = entry.changes.map((change)=>{
       const messages = change.value.messages.map((message)=>{
         console.log('message.text.body:', message.text.body);
+        console.log('saveLogCount:', saveLogCount++);
         saveLog(message.text.body);
       })
     })
