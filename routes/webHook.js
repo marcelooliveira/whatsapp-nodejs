@@ -33,7 +33,7 @@ router.post('/', function(req, res, next) {
   const body = req.body
   const entries = body.entry.map((entry)=>{
     const changes = entry.changes.map((change)=>{
-      console.log('change:', change);
+      console.log('change.value.messages:', change.value.messages);
     })
   })
 
