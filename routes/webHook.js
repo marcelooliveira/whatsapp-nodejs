@@ -29,6 +29,7 @@ router.post('/', function(req, res, next) {
   console.log('password:', process.env.DB_PASSWORD);
   console.log('database:', process.env.DB_DATABASE);
   console.log('body.entry:', JSON.stringify(req.body.entry));
+  saveLog('body.entry:' + JSON.stringify(req.body.entry));
 
   // const body = JSON.parse(req.body)
   // const entries = req.body.entry.map((entry)=>{
@@ -46,7 +47,7 @@ router.post('/', function(req, res, next) {
       const messages = change.value.messages.map((message)=>{
         console.log('message.text.body:', message.text.body);
         console.log('saveLogCount:', saveLogCount++);
-        saveLog(message.text.body);
+        saveLog('message.text.body:' + message.text.body);
       })
     })
   })
