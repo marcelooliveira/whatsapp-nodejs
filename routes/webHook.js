@@ -3,6 +3,7 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 var express = require('express');
 var xhub = require('express-x-hub');
+var mysql = require('mysql');
 
 router.use(xhub({ algorithm: 'sha1', secret: process.env.FACEBOOK_APP_SECRET }));
 router.use(bodyParser.json());
@@ -33,6 +34,23 @@ router.post('/', function(req, res, next) {
   console.log('request header X-Hub-Signature validated');
   // Process the Facebook updates here
   received_updates.unshift(req.body);
+
+  var con = mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD
+  });
+  
+  con.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+    const sql = `INSERT INTO logs (log) VALUES ('${req.body}');`
+    con.query(sql, function (err, result) {
+      if (err) throw err;
+      console.log("Result: " + result);
+    });    
+  });
+
   res.sendStatus(200);
 });
 
