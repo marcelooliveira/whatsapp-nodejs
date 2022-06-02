@@ -30,18 +30,23 @@ router.post('/', function(req, res, next) {
   console.log('body.entry:', req.body.entry);
 
   // const body = JSON.parse(req.body)
-  const body = req.body
-  const entries = body.entry.map((entry)=>{
+  const entries = req.body.entry.map((entry)=>{
     const changes = entry.changes.map((change)=>{
-      console.log('change.value.messages:', change.value.messages);
+      const messages = change.value.messages.map((message)=>{
+        console.log('message.text.body:', message.text.body);
+      })
     })
   })
+
+  console.log('41');
 
   if (!req.isXHubValid()) {
     console.log('Warning - request header X-Hub-Signature not present or invalid');
     res.sendStatus(401);
     return;
   }
+
+  console.log('49');
 
   console.log('request header X-Hub-Signature validated');
   // Process the Facebook updates here
