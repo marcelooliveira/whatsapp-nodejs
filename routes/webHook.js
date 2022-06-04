@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var xhub = require('express-x-hub');
 var mysql = require('mysql');
+const { promisify } = require('util');
 
 router.use(xhub({ algorithm: 'sha1', secret: process.env.FACEBOOK_APP_SECRET }));
 router.use(bodyParser.json());
@@ -24,21 +25,19 @@ router.get(['/'], function(req, res) {
 
 router.post('/', function(req, res, next) {
   console.log('Facebook request body:', req.body);
-  console.log('host:', process.env.DB_HOST);
-  console.log('user:', process.env.DB_USER);
-  console.log('password:', process.env.DB_PASSWORD);
-  console.log('database:', process.env.DB_DATABASE);
-  console.log('body.field:', JSON.stringify(req.body.field));
-  console.log('body.entry:', JSON.stringify(req.body.entry));
 
   const entries = req.body.entry.map((entry)=>{
     const changes = entry.changes.map((change)=>{
       const messages = change.value.messages.map((message)=>{
         if (message.type == 'text') {
           console.log('message.text.body:', message.text.body);
-          saveLog(message.id, message.text.body, function() {
+
+          try {
+            await saveLogAsync(message.id, message.text.body);
             res.sendStatus(200);
-          });
+          } catch (error) {
+            res.sendStatus(500);
+          }
         }
       })
     })
@@ -49,29 +48,17 @@ router.post('/', function(req, res, next) {
 module.exports = router;
 
 
-function saveLog(id, log, callback) {
-  var con = mysql.createConnection({
+var saveLogAsync = async function(id, log, callback) {
+  var conn = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE
   });
 
-  con.connect(function (err) {
-    if (err)
-      throw err;
-    console.log("Connected!");
+  const sql = `REPLACE INTO logs (id, log) VALUES ('${id}', '${log}');`;
 
-    const sql = `REPLACE INTO logs (id, log) VALUES ('${id}', '${log}');`;
-    con.query(sql, function (err, result) {
-      if (err) {
-        console.log("err: " + err);
-        throw err;
-      }
-      console.log("Result: " + JSON.stringify(result));
-      con.end();
-      callback();
-    });
-  });
+  let saveLog = promisify(conn.query).bind(conn);
+  return await saveLog(sql);
 }
 
