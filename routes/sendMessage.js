@@ -43,21 +43,13 @@ router.get('/', function(req, res, next) {
             {
               "type": "date_time",
               "date_time": {
-                "fallback_value": "Today"
+                "fallback_value": "October 25, 2022 - 8:00 PM",
               }
             },
             {
               "type": "text",
               "text": "Grand Cinema"
             },
-            // {
-            //   "type": "currency",
-            //   "currency" : {
-            //     "fallback_value": "$2.99",
-            //     "code": "USD",
-            //     "amount_1000": 2990
-            //   }
-            // },
             {
               "type": "text",
               "text": 4
