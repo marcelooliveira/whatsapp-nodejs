@@ -26,9 +26,9 @@ router.get(['/'], function(req, res) {
 router.post('/', async function(req, res, next) {
   console.log('Facebook request body:', req.body);
 
-  const entries = req.body.entry.map((entry)=>{
-    const changes = entry.changes.map((change)=>{
-      const messages = change.value.messages.map((message)=>{
+  const entries = req.body.entry.map(async (entry)=>{
+    const changes = entry.changes.map(async (change)=>{
+      const messages = change.value.messages.map(async (message)=>{
         if (message.type == 'text') {
           console.log('message.text.body:', message.text.body);
 
