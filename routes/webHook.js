@@ -36,6 +36,7 @@ router.post('/', async function(req, res, next) {
             await saveLogAsync(message.id, message.text.body);
             res.sendStatus(200);
           } catch (error) {
+            console.log(error);
             res.sendStatus(500);
           }
         }
