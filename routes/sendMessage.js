@@ -16,16 +16,28 @@ router.get('/', function(req, res, next) {
     "to": process.env.RECIPIENT_WAID,
     "type": "template",
     "template": {
-      "name": "sample_shipping_confirmation",
+      "name": "sample_movie_ticket_confirmation",
       "language": {
         "code": "en_US"
       },
       "components": [{
         "type": "body",
         "parameters": [{
-                        "type": "text",
-                        "text": "3"
-                      }]
+                          "type": "text",
+                          "text": "Top Gun 2"
+                        },
+                        {
+                          "type": "text",
+                          "text": "Wednesday, July 1, 2022 8:00 PM"
+                        },
+                        {
+                          "type": "text",
+                          "text": "Houston Grand Cinema"
+                        },
+                        {
+                          "type": "text",
+                          "text": "3"
+                        }]
            }]      
     }
   });
