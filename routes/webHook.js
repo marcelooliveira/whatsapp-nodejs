@@ -68,35 +68,32 @@ router.post('/', function(req, res, next) {
         if (message.type == 'text') {
           console.log('message.text.body:', message.text.body);
           console.log('saveLogCount:', saveLogCount++);
-          saveLog(message.id, message.text.body);
+          saveLog(message.id, message.text.body, function() {
+            res.sendStatus(200);
+          });
         }
       })
     })
   })
 
-  console.log('55');
+  // console.log('req.isXHubValid()', req.isXHubValid());
 
-  console.log('req.isXHubValid()', req.isXHubValid());
+  // if (!req.isXHubValid()) {
+  //   console.log('Warning - request header X-Hub-Signature not present or invalid');
+  //   res.sendStatus(401);
+  //   return;
+  // }
 
-  if (!req.isXHubValid()) {
-    console.log('Warning - request header X-Hub-Signature not present or invalid');
-    res.sendStatus(401);
-    return;
-  }
+  // console.log('request header X-Hub-Signature validated');
+  // // Process the Facebook updates here
+  // received_updates.unshift(req.body);
 
-  console.log('65');
-
-  console.log('request header X-Hub-Signature validated');
-  // Process the Facebook updates here
-  received_updates.unshift(req.body);
-
-  res.sendStatus(200);
 });
 
 module.exports = router;
 
 
-function saveLog(id, log) {
+function saveLog(id, log, callback) {
   var con = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -117,6 +114,7 @@ function saveLog(id, log) {
       }
       console.log("Result: " + JSON.stringify(result));
       con.end();
+      callback();
     });
   });
 }
