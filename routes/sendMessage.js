@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
     "to": process.env.RECIPIENT_WAID,
     "type": "template",
     "template": {
-      "name": "sample_movie_ticket_confirmation",
+      "name": "hello_world",
       "language": {
         "code": "en_US"
       }
