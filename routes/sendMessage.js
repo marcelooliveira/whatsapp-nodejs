@@ -28,15 +28,8 @@ router.get('/', function(req, res, next) {
                                         }
                                         ,
                                         {
-                                          "type": "date_time",
-                                          "date_time" : {
-                                              "fallback_value": "xxxxxxxxxxxxxxx",
-                                              "day_of_month": 20,
-                                              "year": 2019,
-                                              "month": 9,
-                                              "hour": 20,
-                                              "minute": 45
-                                          }
+                                          "type": "text",
+                                          "text" : "01/08/2022"
                                         },
                                         {
                                           "type": "text",
