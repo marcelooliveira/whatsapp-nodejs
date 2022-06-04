@@ -22,11 +22,7 @@ router.get('/', function(req, res, next) {
       },
       "components": [{
                           "type" : "body",
-                          "parameters": [{
-                                          "type": "text",
-                                          "text": "Top Gun 2"
-                                        }
-                                      ]
+                          "parameters": []
                       }]
     }
   });
