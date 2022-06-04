@@ -97,7 +97,7 @@ router.post('/', function(req, res, next) {
 module.exports = router;
 
 
-function saveLog(message) {
+function saveLog(id, log) {
   var con = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -109,7 +109,8 @@ function saveLog(message) {
     if (err)
       throw err;
     console.log("Connected!");
-    const sql = `INSERT INTO logs (log) VALUES ('${message}');`;
+
+    const sql = `REPLACE INTO logs (id, log) VALUES ('${id}', '${log}');`;
     con.query(sql, function (err, result) {
       if (err) {
         console.log("err: " + err);
