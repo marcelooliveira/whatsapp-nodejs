@@ -6,7 +6,7 @@ var xhub = require('express-x-hub');
 var mysql = require('mysql');
 const { promisify } = require('util');
 
-router.use(xhub({ algorithm: 'sha1', secret: process.env.FACEBOOK_APP_SECRET }));
+router.use(xhub({ algorithm: 'sha1', secret: process.env.APP_SECRET }));
 router.use(bodyParser.json());
 
 var token = process.env.TOKEN || 'token';
@@ -24,7 +24,7 @@ router.get(['/'], function(req, res) {
 });
 
 router.post('/', async function(req, res, next) {
-  console.log('Facebook request body:', req.body);
+  console.log('Request body:', req.body);
 
   const entries = req.body.entry.map(async (entry)=>{
     const changes = entry.changes.map(async (change)=>{
