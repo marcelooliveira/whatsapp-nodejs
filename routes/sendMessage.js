@@ -21,8 +21,6 @@ router.get('/', function(req, res, next) {
         "code": "en_US"
       },
       "components": [{
-        "type": "body",
-        "parameters": [{
                         "type" : "header",
                         "parameters": [
                             {
@@ -59,7 +57,6 @@ router.get('/', function(req, res, next) {
                           "text": "3"
                         }]
                       }]
-           }]      
     }
   });
   
