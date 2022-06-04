@@ -28,6 +28,11 @@ router.post('/', async function(req, res, next) {
 
   const entries = req.body.entry.map(async (entry)=>{
     const changes = entry.changes.map(async (change)=>{
+      if (!change.value.messages) {
+        res.sendStatus(200);
+        return;
+      }
+
       const messages = change.value.messages.map(async (message)=>{
         if (message.type == 'text') {
           console.log('message.text.body:', message.text.body);
