@@ -30,10 +30,6 @@ router.get('/', function(req, res, next) {
                                         {
                                           "type": "text",
                                           "text" : "01/08/2022"
-                                        },
-                                        {
-                                          "type": "text",
-                                          "text": "Houston Grand Cinema"
                                         }
                                       ]
                       }]
