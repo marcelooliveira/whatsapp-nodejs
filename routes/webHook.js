@@ -60,21 +60,21 @@ router.post('/', function(req, res, next) {
   // return Promise.all(reviews).then((data) => res.sendStatus(200));
 
 
+  let saveLogCount = 1;
+
   const entries = req.body.entry.map((entry)=>{
     const changes = entry.changes.map((change)=>{
       const messages = change.value.messages.map((message)=>{
         if (message.type == 'text') {
           console.log('message.text.body:', message.text.body);
           console.log('saveLogCount:', saveLogCount++);
-          saveLog(message.id, message.text.body, function() {
-            res.sendStatus(200);
-          });
+          saveLog(message.id, message.text.body);
         }
       })
     })
   })
-  return 
 
+  console.log('55');
 
   console.log('req.isXHubValid()', req.isXHubValid());
 
@@ -83,6 +83,8 @@ router.post('/', function(req, res, next) {
     res.sendStatus(401);
     return;
   }
+
+  console.log('65');
 
   console.log('request header X-Hub-Signature validated');
   // Process the Facebook updates here
@@ -94,7 +96,7 @@ router.post('/', function(req, res, next) {
 module.exports = router;
 
 
-function saveLog(id, log, callback) {
+function saveLog(id, log) {
   var con = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -115,7 +117,6 @@ function saveLog(id, log, callback) {
       }
       console.log("Result: " + JSON.stringify(result));
       con.end();
-      callback();
     });
   });
 }
