@@ -25,6 +25,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/sendMessage', sendMessageRouter);
 app.use('/webHook', webHookRouter);
+app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
