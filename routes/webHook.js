@@ -31,43 +31,11 @@ router.post('/', function(req, res, next) {
   console.log('body.field:', JSON.stringify(req.body.field));
   console.log('body.entry:', JSON.stringify(req.body.entry));
 
-  // const body = JSON.parse(req.body)
-  // const entries = req.body.entry.map((entry)=>{
-  //   const changes = entry.changes.map((change)=>{
-  //     const messages = change.value.messages.map((message)=>{
-  //       console.log('message.text.body:', message.text.body);
-  //     })
-  //   })
-  // })
-
-  // const body = req.body
-  // if (body.field !== 'messages') {
-  //   // not from the messages webhook so dont process
-  //   return res.sendStatus(400)
-  // }
-
-  // const reviews = body.value.messages.map((message) => {
-  //   const reviewInfo = {
-  //     TableName: process.env.REVIEW_TABLE,
-  //     Item: {
-  //       phonenumber: message.from,
-  //       review: message.text.body
-  //     }
-  //   }
-  //   return dynamoDb.put(reviewInfo).promise()
-  // })
-  // // return 200 code once all reviews have been written to dynamoDB
-  // return Promise.all(reviews).then((data) => res.sendStatus(200));
-
-
-  let saveLogCount = 1;
-
   const entries = req.body.entry.map((entry)=>{
     const changes = entry.changes.map((change)=>{
       const messages = change.value.messages.map((message)=>{
         if (message.type == 'text') {
           console.log('message.text.body:', message.text.body);
-          console.log('saveLogCount:', saveLogCount++);
           saveLog(message.id, message.text.body, function() {
             res.sendStatus(200);
           });
@@ -75,18 +43,6 @@ router.post('/', function(req, res, next) {
       })
     })
   })
-
-  // console.log('req.isXHubValid()', req.isXHubValid());
-
-  // if (!req.isXHubValid()) {
-  //   console.log('Warning - request header X-Hub-Signature not present or invalid');
-  //   res.sendStatus(401);
-  //   return;
-  // }
-
-  // console.log('request header X-Hub-Signature validated');
-  // // Process the Facebook updates here
-  // received_updates.unshift(req.body);
 
 });
 
