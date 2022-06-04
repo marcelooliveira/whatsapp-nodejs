@@ -69,6 +69,8 @@ router.post('/', function(req, res, next) {
           console.log('message.text.body:', message.text.body);
           console.log('saveLogCount:', saveLogCount++);
           saveLog(message.id, message.text.body);
+          res.sendStatus(200);
+          return;
         }
       })
     })
