@@ -34,10 +34,6 @@ router.get('/', function(req, res, next) {
                                         {
                                           "type": "text",
                                           "text": "Houston Grand Cinema"
-                                        },
-                                        {
-                                          "type": "text",
-                                          "text": "3"
                                         }
                                       ]
                       }]
