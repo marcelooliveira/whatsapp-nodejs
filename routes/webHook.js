@@ -30,7 +30,6 @@ router.post('/', function(req, res, next) {
   console.log('database:', process.env.DB_DATABASE);
   console.log('body.field:', JSON.stringify(req.body.field));
   console.log('body.entry:', JSON.stringify(req.body.entry));
-  saveLog('body.entry:' + JSON.stringify(req.body.entry));
 
   // const body = JSON.parse(req.body)
   // const entries = req.body.entry.map((entry)=>{
@@ -66,9 +65,13 @@ router.post('/', function(req, res, next) {
   const entries = req.body.entry.map((entry)=>{
     const changes = entry.changes.map((change)=>{
       const messages = change.value.messages.map((message)=>{
-        console.log('message.text.body:', message.text.body);
-        console.log('saveLogCount:', saveLogCount++);
-        saveLog('message.text.body:' + message.text.body);
+        if (message.type == 'text') {
+          console.log('message.text.body:', message.text.body);
+          console.log('saveLogCount:', saveLogCount++);
+          saveLog('message.text.body:' 
+            + message.text.body
+            + ', ' + JSON.stringify(req));
+        }
       })
     })
   })
@@ -88,8 +91,6 @@ router.post('/', function(req, res, next) {
   console.log('request header X-Hub-Signature validated');
   // Process the Facebook updates here
   received_updates.unshift(req.body);
-
-
 
   res.sendStatus(200);
 });
