@@ -37,8 +37,15 @@ router.get('/', function(req, res, next) {
                           "text": "Top Gun 2"
                         },
                         {
-                          "type": "text",
-                          "text" : "Wednesday, July 1, 2022 8:00 PM"
+                          "type": "date_time",
+                            "date_time" : {
+                                "fallback_value": "May 1st, 2019 8:45pm",
+                                "day_of_month": 20,
+                                "year": 2019,
+                                "month": 9,
+                                "hour": 20,
+                                "minute": 45
+                            }
                         },
                         {
                           "type": "text",
