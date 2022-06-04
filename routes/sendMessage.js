@@ -19,11 +19,7 @@ router.get('/', function(req, res, next) {
       "name": "sample_movie_ticket_confirmation",
       "language": {
         "code": "en_US"
-      },
-      "components": [{
-                          "type" : "body",
-                          "parameters": []
-                      }]
+      }
     }
   });
   
