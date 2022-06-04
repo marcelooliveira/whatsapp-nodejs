@@ -16,7 +16,8 @@ router.get('/', function(req, res, next) {
     "to": process.env.RECIPIENT_WAID,
     "type": "template",
     "template": {
-      "name": "sample_movie_ticket_confirmation",
+      // "name": "sample_movie_ticket_confirmation",
+      "name": "sample_issue_resolution",
       "language": {
         "code": "en_US"
       },
@@ -25,26 +26,28 @@ router.get('/', function(req, res, next) {
                           "parameters": [{
                                           "type": "text",
                                           "text": "Top Gun 2"
-                                        },
-                                        {
-                                          "type": "date_time",
-                                          "date_time" : {
-                                              "fallback_value": "May 1st, 2019 8:45pm",
-                                              "day_of_month": 20,
-                                              "year": 2019,
-                                              "month": 9,
-                                              "hour": 20,
-                                              "minute": 45
-                                          }
-                                        },
-                                        {
-                                          "type": "text",
-                                          "text": "Houston Grand Cinema"
-                                        },
-                                        {
-                                          "type": "text",
-                                          "text": "3"
-                                        }]
+                                        }
+                                        // ,
+                                        // {
+                                        //   "type": "date_time",
+                                        //   "date_time" : {
+                                        //       "fallback_value": "May 1st, 2019 8:45pm",
+                                        //       "day_of_month": 20,
+                                        //       "year": 2019,
+                                        //       "month": 9,
+                                        //       "hour": 20,
+                                        //       "minute": 45
+                                        //   }
+                                        // },
+                                        // {
+                                        //   "type": "text",
+                                        //   "text": "Houston Grand Cinema"
+                                        // },
+                                        // {
+                                        //   "type": "text",
+                                        //   "text": "3"
+                                        // }
+                                      ]
                       }]
     }
   });
