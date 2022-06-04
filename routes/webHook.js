@@ -68,8 +68,7 @@ router.post('/', function(req, res, next) {
         if (message.type == 'text') {
           console.log('message.text.body:', message.text.body);
           console.log('saveLogCount:', saveLogCount++);
-          saveLog('message.text.body:' 
-            + message.text.body);
+          saveLog(message.id, message.text.body);
         }
       })
     })
