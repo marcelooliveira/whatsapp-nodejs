@@ -23,7 +23,7 @@ router.get(['/'], function(req, res) {
   }
 });
 
-router.post('/', function(req, res, next) {
+router.post('/', async function(req, res, next) {
   console.log('Facebook request body:', req.body);
 
   const entries = req.body.entry.map((entry)=>{
