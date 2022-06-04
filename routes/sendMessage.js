@@ -16,10 +16,17 @@ router.get('/', function(req, res, next) {
     "to": process.env.RECIPIENT_WAID,
     "type": "template",
     "template": {
-      "name": "hello_world",
+      "name": "sample_shipping_confirmation",
       "language": {
         "code": "en_US"
-      }
+      },
+      "components": [{
+        "type": "body",
+        "parameters": [{
+                        "type": "text",
+                        "text": "3"
+                      }]
+           }]      
     }
   });
   
