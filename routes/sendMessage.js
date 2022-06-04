@@ -37,17 +37,9 @@ router.get('/', function(req, res, next) {
                           "text": "Top Gun 2"
                         },
                         {
-                          "type": "date_time",
-                          "date_time" : {
-                              "fallback_value": "February 25, 1977",
-                              "day_of_week": 5,
-                              "day_of_month": 25,
-                              "year": 1977,
-                              "month": 2,
-                              "hour": 15,
-                              "minute": 33
-                          }
-                      },
+                          "type": "text",
+                          "text" : "Wednesday, July 1, 2022 8:00 PM"
+                        },
                         {
                           "type": "text",
                           "text": "Houston Grand Cinema"
