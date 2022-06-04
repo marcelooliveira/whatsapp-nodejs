@@ -23,6 +23,18 @@ router.get('/', function(req, res, next) {
       "components": [{
         "type": "body",
         "parameters": [{
+                        "type" : "header",
+                        "parameters": [
+                            {
+                                "type": "text",
+                                "text": "THIS IS A SILLY TITLE"
+                            }
+                        ]
+                      },
+                      {
+                          "type" : "body",
+                          "parameters": [
+                        {
                           "type": "text",
                           "text": "Top Gun 2"
                         },
@@ -38,6 +50,7 @@ router.get('/', function(req, res, next) {
                           "type": "text",
                           "text": "3"
                         }]
+                      }]
            }]      
     }
   });
