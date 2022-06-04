@@ -43,13 +43,13 @@ router.get('/', function(req, res, next) {
             {
               "type": "date_time",
               "date_time": {
-                "fallback_va1ue": "Today"
+                "fallback_value": "Today"
               }
             },
             {
               "type": "currency",
               "currency": {
-                "fallback_va1ue": "VALUE",
+                "fallback_value": "VALUE",
                 "code": "USD",
                 "amount_l000": 2000
               }
