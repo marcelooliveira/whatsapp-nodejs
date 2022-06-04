@@ -93,7 +93,7 @@ router.post('/', function(req, res, next) {
 module.exports = router;
 
 
-function saveLog(id, log) {
+function saveLog(id, log, callback) {
   var con = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
