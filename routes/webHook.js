@@ -22,7 +22,7 @@ router.get(['/'], function(req, res) {
   }
 });
 
-router.post('/', async function(req, res, next) {
+router.post('/', function(req, res, next) {
   console.log('Facebook request body:', req.body);
   console.log('host:', process.env.DB_HOST);
   console.log('user:', process.env.DB_USER);
@@ -66,9 +66,10 @@ router.post('/', async function(req, res, next) {
         if (message.type == 'text') {
           console.log('message.text.body:', message.text.body);
           console.log('saveLogCount:', saveLogCount++);
-          await saveLog(message.id, message.text.body);
-          res.sendStatus(200);
-          return;
+          saveLog(message.id, message.text.body).then(result => {
+            res.sendStatus(200);
+            return;
+          });
         }
       })
     })
