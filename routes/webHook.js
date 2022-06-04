@@ -66,16 +66,15 @@ router.post('/', function(req, res, next) {
         if (message.type == 'text') {
           console.log('message.text.body:', message.text.body);
           console.log('saveLogCount:', saveLogCount++);
-          saveLog(message.id, message.text.body).then(result => {
+          saveLog(message.id, message.text.body, function() {
             res.sendStatus(200);
-            return;
           });
         }
       })
     })
   })
+  return 
 
-  console.log('55');
 
   console.log('req.isXHubValid()', req.isXHubValid());
 
@@ -84,8 +83,6 @@ router.post('/', function(req, res, next) {
     res.sendStatus(401);
     return;
   }
-
-  console.log('65');
 
   console.log('request header X-Hub-Signature validated');
   // Process the Facebook updates here
@@ -97,30 +94,28 @@ router.post('/', function(req, res, next) {
 module.exports = router;
 
 
-function saveLog(id, log) {
-  return new Promise(function(resolve, reject) {
-    var con = mysql.createConnection({
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE
-    });
+function saveLog(id, log, callback) {
+  var con = mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE
+  });
 
-    con.connect(function (err) {
-      if (err)
-        return reject(err);
-      console.log("Connected!");
+  con.connect(function (err) {
+    if (err)
+      throw err;
+    console.log("Connected!");
 
-      const sql = `REPLACE INTO logs (id, log) VALUES ('${id}', '${log}');`;
-      con.query(sql, function (err, result) {
-        if (err) {
-          console.log("err: " + err);
-          return reject(err);
-        }
-        console.log("Result: " + JSON.stringify(result));
-        con.end();
-        resolve(result);
-      });
+    const sql = `REPLACE INTO logs (id, log) VALUES ('${id}', '${log}');`;
+    con.query(sql, function (err, result) {
+      if (err) {
+        console.log("err: " + err);
+        throw err;
+      }
+      console.log("Result: " + JSON.stringify(result));
+      con.end();
+      callback();
     });
   });
 }
