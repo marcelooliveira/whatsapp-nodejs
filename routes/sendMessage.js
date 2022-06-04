@@ -26,11 +26,6 @@ router.get('/', function(req, res, next) {
                                           "type": "text",
                                           "text": "Top Gun 2"
                                         }
-                                        ,
-                                        {
-                                          "type": "text",
-                                          "text" : "01/08/2022"
-                                        }
                                       ]
                       }]
     }
