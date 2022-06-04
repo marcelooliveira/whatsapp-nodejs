@@ -22,7 +22,7 @@ router.get(['/'], function(req, res) {
   }
 });
 
-router.post('/', function(req, res, next) {
+router.post('/', async function(req, res, next) {
   console.log('Facebook request body:', req.body);
   console.log('host:', process.env.DB_HOST);
   console.log('user:', process.env.DB_USER);
