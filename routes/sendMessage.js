@@ -30,6 +30,7 @@ router.get('/', function(req, res, next) {
                                         {
                                           "type": "date_time",
                                           "date_time" : {
+                                              "fallback_value": "xxxxxxxxxxxxxxx",
                                               "day_of_month": 20,
                                               "year": 2019,
                                               "month": 9,
