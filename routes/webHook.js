@@ -26,6 +26,7 @@ router.get(['/'], function(req, res) {
 
 router.post('/', async function(req, res, next) {
   console.log('Request body:', req.body);
+  console.log('Request body:', JSON.stringify(req.body));
 
   const entries = req.body.entry.map(async (entry)=>{
     const changes = entry.changes.map(async (change)=>{
