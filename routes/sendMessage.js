@@ -30,7 +30,6 @@ router.get('/', function(req, res, next) {
                                         {
                                           "type": "date_time",
                                           "date_time" : {
-                                              "fallback_value": "May 1st, 2019 8:45pm",
                                               "day_of_month": 20,
                                               "year": 2019,
                                               "month": 9,
@@ -43,8 +42,8 @@ router.get('/', function(req, res, next) {
                                           "text": "Houston Grand Cinema"
                                         },
                                         {
-                                          "type": "number",
-                                          "text": 3
+                                          "type": "text",
+                                          "text": "3"
                                         }
                                       ]
                       }]
