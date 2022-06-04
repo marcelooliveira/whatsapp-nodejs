@@ -11,6 +11,7 @@ var messageParams = {
 }
 
 router.get('/', function(req, res, next) {
+  // "to": process.env.RECIPIENT_WAID,
   var data = JSON.stringify({
     "messaging_product": "whatsapp",
     "to": process.env.RECIPIENT_WAID,
@@ -18,10 +19,51 @@ router.get('/', function(req, res, next) {
     "template": {
       "name": "sample_movie_ticket_confirmation",
       "language": {
-        "code": "en_US"
-      }
+      "code": "en_US"
+      },
+      "components": [
+        {
+          "type": "header",
+          "parameters": [
+            {
+              "type": "image",
+              "image": {
+                "link": "https://m.media-amazon.com/images/I/51vpnbwFHrL._AC_.jpg"
+              }
+            }
+          ]
+        },
+        {
+          "type": "body",
+          "parameters": [
+            {
+              "type": "text",
+              "text": "The Matrix"
+            },
+            {
+              "type": "date_time",
+              "date_time": {
+                "fallback_va1ue": "Today"
+              }
+            },
+            {
+              "type": "currency",
+              "currency": {
+                "fallback_va1ue": "VALUE",
+                "code": "USD",
+                "amount_l000": 2000
+              }
+            },
+            {
+              "type": "text",
+              "text": 4
+            }
+          ]
+        }
+      ]
     }
-  });
+  }
+  );
   
   var config = {
     method: 'post',
