@@ -48,10 +48,10 @@ router.get('/', function(req, res, next) {
             },
             {
               "type": "currency",
-              "currency": {
-                "fallback_value": "VALUE",
+              "currency" : {
+                "fallback_value": "$2.99",
                 "code": "USD",
-                "amount_l000": 2000
+                "amount_1000": 2990
               }
             },
             {
