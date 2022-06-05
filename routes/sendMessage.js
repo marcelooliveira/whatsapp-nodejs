@@ -1,65 +1,16 @@
 var express = require('express');
 var router = express.Router();
+var bodyParser = require('body-parser');
 var axios = require('axios');
 require('dotenv').config()
+var { movies } = require('../public/javascripts/movies')
 
-var messageParams = {
-  title: 'Top Gun 2',
-  time: 'Wednesday, July 1, 2022 8:00 PM',
-  venue: 'Houston Grand Cinema',
-  seats: '3'
-}
+router.use(bodyParser.json());
 
-router.get('/', function(req, res, next) {
-  // "to": process.env.RECIPIENT_WAID,
-  var data = JSON.stringify({
-    "messaging_product": "whatsapp",
-    "to": process.env.RECIPIENT_WAID,
-    "type": "template",
-    "template": {
-      "name": "sample_movie_ticket_confirmation",
-      "language": {
-      "code": "en_US"
-      },
-      "components": [
-        {
-          "type": "header",
-          "parameters": [
-            {
-              "type": "image",
-              "image": {
-                "link": "https://m.media-amazon.com/images/I/51vpnbwFHrL._AC_.jpg"
-              }
-            }
-          ]
-        },
-        {
-          "type": "body",
-          "parameters": [
-            {
-              "type": "text",
-              "text": "The Matrix"
-            },
-            {
-              "type": "date_time",
-              "date_time": {
-                "fallback_value": "October 25, 2022 - 8:00 PM",
-              }
-            },
-            {
-              "type": "text",
-              "text": "Grand Cinema"
-            },
-            {
-              "type": "text",
-              "text": 4
-            }
-          ]
-        }
-      ]
-    }
-  }
-  );
+router.post('/', function(req, res, next) {
+  var movie = movies.filter((v,i) => v.id == req.body.id)[0];
+
+  var data = getSendMessageInput(movie, req);
   
   var config = {
     method: 'post',
@@ -74,13 +25,69 @@ router.get('/', function(req, res, next) {
   axios(config)
   .then(function (response) {
     console.log(JSON.stringify(response.data));
+    res.redirect('/')
+    res.sendStatus(200);
+    return;
   })
   .catch(function (error) {
     console.log(error);
+    res.sendStatus(500);
+    return;
   });
 
 });
 
 module.exports = router;
 
+
+function getSendMessageInput(movie, req) {
+  return JSON.stringify({
+    "messaging_product": "whatsapp",
+    "to": process.env.RECIPIENT_WAID,
+    "type": "template",
+    "template": {
+      "name": "sample_movie_ticket_confirmation",
+      "language": {
+        "code": "en_US"
+      },
+      "components": [
+        {
+          "type": "header",
+          "parameters": [
+            {
+              "type": "image",
+              "image": {
+                "link": movie.thumbnail
+              }
+            }
+          ]
+        },
+        {
+          "type": "body",
+          "parameters": [
+            {
+              "type": "text",
+              "text": movie.title
+            },
+            {
+              "type": "date_time",
+              "date_time": {
+                "fallback_value": movie.time
+              }
+            },
+            {
+              "type": "text",
+              "text": movie.venue
+            },
+            {
+              "type": "text",
+              "text": req.body.seats
+            }
+          ]
+        }
+      ]
+    }
+  }
+  );
+}
 
