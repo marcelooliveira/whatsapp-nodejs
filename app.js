@@ -4,9 +4,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
+var loginRouter = require('./routes/login');
+var welcomeRouter = require('./routes/welcome');
+var catalogRouter = require('./routes/catalog');
 var usersRouter = require('./routes/users');
-var sendMessageRouter = require('./routes/sendMessage');
+var buyTicketRouter = require('./routes/buyTicket');
 var webHookRouter = require('./routes/webHook');
 
 var app = express();
@@ -21,9 +23,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+app.use('/', loginRouter);
+app.use('/welcome', welcomeRouter);
+app.use('/catalog', catalogRouter);
 app.use('/users', usersRouter);
-app.use('/sendMessage', sendMessageRouter);
+app.use('/buyTicket', buyTicketRouter);
 app.use('/webHook', webHookRouter);
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/'));
 

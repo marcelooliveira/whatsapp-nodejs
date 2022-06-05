@@ -1,49 +1,36 @@
-var express = require('express');
-var router = express.Router();
-var bodyParser = require('body-parser');
 var axios = require('axios');
-require('dotenv').config()
-var { movies } = require('../public/javascripts/movies')
 
-router.use(bodyParser.json());
-
-router.post('/', function(req, res, next) {
-  var movie = movies.filter((v,i) => v.id == req.body.id)[0];
-
-  var data = getSendMessageInput(movie, req);
-  
+function sendMessage(data) {
   var config = {
     method: 'post',
     url: `https://graph.facebook.com/${process.env.VERSION}/${process.env.PHONE_NUMBER_ID}/messages`,
-    headers: { 
-      'Authorization': `Bearer ${process.env.ACCESS_TOKEN}`, 
+    headers: {
+      'Authorization': `Bearer ${process.env.ACCESS_TOKEN}`,
       'Content-Type': 'application/json'
     },
-    data : data
+    data: data
   };
 
-  axios(config)
-  .then(function (response) {
-    console.log(JSON.stringify(response.data));
-    res.redirect('/')
-    res.sendStatus(200);
-    return;
-  })
-  .catch(function (error) {
-    console.log(error);
-    res.sendStatus(500);
-    return;
-  });
+  return axios(config)
+}
 
-});
-
-module.exports = router;
-
-
-function getSendMessageInput(movie, req) {
+function getTextMessageInput(recipient, text) {
   return JSON.stringify({
     "messaging_product": "whatsapp",
-    "to": process.env.RECIPIENT_WAID,
+    "preview_url": false,
+    "recipient_type": "individual",
+    "to": recipient,
+    "type": "text",
+    "text": {
+        "body": text
+    }
+  });
+}
+
+function getTemplatedMessageInput(recipient, movie, seats) {
+  return JSON.stringify({
+    "messaging_product": "whatsapp",
+    "to": recipient,
     "type": "template",
     "template": {
       "name": "sample_movie_ticket_confirmation",
@@ -81,7 +68,7 @@ function getSendMessageInput(movie, req) {
             },
             {
               "type": "text",
-              "text": req.body.seats
+              "text": seats
             }
           ]
         }
@@ -91,3 +78,6 @@ function getSendMessageInput(movie, req) {
   );
 }
 
+exports.sendMessage = sendMessage;
+exports.getTextMessageInput = getTextMessageInput;
+exports.getTemplatedMessageInput = getTemplatedMessageInput;
